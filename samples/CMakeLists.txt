@@ -6,9 +6,9 @@ add_definitions(-std=c++11) # Use C++11
 
 set(YDLIDAR_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 IF (WIN32)
-list(APPEND YDLIDAR_LIBRARIES  ${CMAKE_CURRENT_SOURCE_DIR}/../lib/libydlidar_driver.dll)
+list(APPEND YDLIDAR_LIBRARIES  ${CMAKE_CURRENT_BINARY_DIR}/../lib/libydlidar_driver.dll)
 ELSE()
-list(APPEND YDLIDAR_LIBRARIES  ${CMAKE_CURRENT_SOURCE_DIR}/../lib/libydlidar_driver.so)
+list(APPEND YDLIDAR_LIBRARIES  ${CMAKE_CURRENT_BINARY_DIR}/../lib/libydlidar_driver.so)
 ENDIF()
 
 
@@ -23,6 +23,10 @@ INCLUDE_DIRECTORIES(
 
 ADD_EXECUTABLE(${PROJECT_NAME}
                main.cpp)
-
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${YDLIDAR_LIBRARIES}
+                ${CMAKE_CURRENT_BINARY_DIR})
 # Add the required libraries for linking:
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}  ${YDLIDAR_LIBRARIES})

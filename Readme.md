@@ -1,4 +1,5 @@
 # Build
 ```
-$ cmake . -G "MSYS Makefiles"
+$ make build && cd build
+$ cmake .. -G "MSYS Makefiles"
 ```
